@@ -2,6 +2,7 @@ package bo;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import util.FriendComparatorByName;
@@ -29,6 +30,17 @@ AddressBookBO {
 		addressBook1.setDescription(addressBook.getDescription());
 		addressBook1.setFriends(addressBook.getFriends());
 		return addressBook1;
+	}
+
+	@Override
+	public HashMap<AddressBook, List<Friend>> getUniqueFriendsFromAddressBook(
+			AddressBook addressBook1, AddressBook addressBook2) {
+
+		HashMap<AddressBook, List<Friend>> uniquiFrdsMap =
+			new HashMap<AddressBook, List<Friend>>();
+		uniquiFrdsMap.put(addressBook1, addressBook1.compareAndGetUniqueFrds(addressBook2));
+		uniquiFrdsMap.put(addressBook2, addressBook2.compareAndGetUniqueFrds(addressBook1));
+		return uniquiFrdsMap;
 	}
 
 

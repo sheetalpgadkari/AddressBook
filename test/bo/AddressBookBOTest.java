@@ -4,6 +4,7 @@ package bo;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Collection;
 
@@ -67,7 +68,7 @@ public class AddressBookBOTest {
 	}
 	
 	@Test
-	public void testSortAddressBookByFriendNameWithNamesStartingWithSameLetter (){
+	public void sortAddressBookByFriendNameWithNamesStartingWithSameLetter (){
 		AddressBook addressBook = getUniversityFriendsAddressBook1();
 		AddressBook sortedAddressBook = addressBookBO.sortAddressBookByFriendName(addressBook);
 		 
@@ -80,7 +81,7 @@ public class AddressBookBOTest {
 	}
 	
 	@Test
-	public void testSortAddressBookByFriendNameWithFrdWithSameName (){
+	public void sortAddressBookByFriendNameWithFrdWithSameName (){
 		AddressBook addressBook = getUniversityFriendsAddressBook1();
 		Friend newfrd = new Friend("Mathew", "987272938");
 		addressBook.getFriends().add(newfrd);
@@ -94,5 +95,27 @@ public class AddressBookBOTest {
 		assertEquals ("Mathew" , frds.get(3).getName() );
 		assertEquals ( "Shen", frds.get(4).getName());		
 	}
+	@Test
+	public void getUniqueFriendsFromAddressBook (){
+		AddressBook addressBook1 = getUniversityFriendsAddressBook1();
+		AddressBook addressBook2 = getWorkFriendsAddressBook1();
+		
+		HashMap<AddressBook, List<Friend>> 
+		uniquiFrdsSet = addressBookBO.getUniqueFriendsFromAddressBook(addressBook1, addressBook2);
+		
+		List<Friend> uuiqueSetFrdsFromAddBook1 = uniquiFrdsSet.get(addressBook1);
+		List<Friend> uuiqueSetFrdsFromAddBook2 = uniquiFrdsSet.get(addressBook2);
+		
+		assertEquals(1, uuiqueSetFrdsFromAddBook2.size());
+		
+		assertEquals(3, uuiqueSetFrdsFromAddBook1.size());
+		
+		assertEquals("Justin", uuiqueSetFrdsFromAddBook2.get(0).getName());
+		
+		assertEquals("John", uuiqueSetFrdsFromAddBook1.get(0).getName());
+		assertEquals("Shen", uuiqueSetFrdsFromAddBook1.get(1).getName());
 
+		
+	}
+	
 }
